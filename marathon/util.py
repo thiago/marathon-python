@@ -54,9 +54,13 @@ class MarathonMinimalJsonEncoder(json.JSONEncoder):
         return obj
 
 
+def to_title(title_str):
+    return re.sub(r"[A-Za-z0-9]+('[A-Za-z0-9]+)?", lambda mo: mo.group(0)[0].upper() + mo.group(0)[1:].lower(), title_str)
+
+
 def to_camel_case(snake_str):
     words = snake_str.split('_')
-    return words[0] + ''.join(w.title() for w in words[1:])
+    return words[0] + ''.join(to_title(w) for w in words[1:])
 
 
 def to_snake_case(camel_str):
